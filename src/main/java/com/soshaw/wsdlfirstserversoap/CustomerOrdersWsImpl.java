@@ -32,7 +32,9 @@ public class CustomerOrdersWsImpl  implements CustomerOrdersPortType {
         Integer customerId=request.getCustomerId();
         GetOrderResponse response=new GetOrderResponse();
         List<Order>order=customerOrder.get(customerId);
-        response.getOrderList().addAll(order);
+        for(Order or:order){
+            response.getOrderList().add(or);
+        }
         return response;
     }
 
@@ -43,6 +45,7 @@ public class CustomerOrdersWsImpl  implements CustomerOrdersPortType {
         List<Order>orders=customerOrder.get(customerId);
         if(orders==null)orders=new ArrayList<>();
         orders.add(order1);
+        customerOrder.put(customerId,orders);
         CreateOrderResponse response=new CreateOrderResponse();
         response.setResult(true);
         return response;
